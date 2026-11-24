@@ -1,6 +1,6 @@
 # Inhaltskarte
 
-Automatisch erzeugt mit `werkstatt/werkzeuge/karte.py`. Stand: 
+Automatisch erzeugt mit `werkstatt/werkzeuge/karte.py`. Stand: a5afe95, 2026-11-24: Zu zweit 1001: geteilte To-do-Liste für zwei
 
 Vorgehen: Abschnitt hier finden → `grep -n "<Titel>" index.html` → nur diesen Bereich lesen.
 
