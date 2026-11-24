@@ -1,10 +1,10 @@
 # Inhaltskarte
 
-Automatisch erzeugt mit `werkstatt/werkzeuge/karte.py`. Stand: a5afe95, 2026-11-24: Zu zweit 1001: geteilte To-do-Liste für zwei
+Automatisch erzeugt mit `werkstatt/werkzeuge/karte.py`. Stand: b608e09, 2026-11-24: Zu zweit 1001: Karte
 
 Vorgehen: Abschnitt hier finden → `grep -n "<Titel>" index.html` → nur diesen Bereich lesen.
 
-## `index.html` – Zu zweit 1001
+## `index.html` – Zu zweit 1002
 888 Zeilen, 56 KB.
 
 **Bedien-Bereiche (HTML)**

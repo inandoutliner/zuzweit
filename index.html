@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Zu zweit 1001</title>
+<title>Zu zweit 1002</title>
 <meta name="apple-mobile-web-app-title" content="Zu zweit">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="mobile-web-app-capable" content="yes">
@@ -349,7 +349,7 @@ dialog.sheet[open] { animation: up .32s var(--ease); }
     <p id="sState" class="hint"></p>
     <button class="link" type="button" id="sSync">Jetzt abgleichen</button>
     <button class="link danger" type="button" id="sLeave">Liste auf diesem iPhone entfernen</button>
-    <p class="hint">Zu zweit 1001</p>
+    <p class="hint">Zu zweit 1002</p>
   </form>
 </dialog>
 
@@ -630,7 +630,7 @@ function renderComposer() {
   $('#cGroup').innerHTML = GROUPS.map(([g, l]) => `<button type="button" data-g="${g}" aria-pressed="${ui.group === g}">${l}</button>`).join('');
   $('#cOwner').innerHTML = `${esc(ui.owner === 'wir' ? 'Beide' : ui.owner === me ? 'Ich' : nameOf(ui.owner))} ${avatar(ui.owner)}`;
   $('#cOwner').setAttribute('aria-label', 'Neue Aufgabe für: ' + whoLabel(ui.owner) + '. Tippen zum Wechseln');
-  $('#cText').placeholder = ui.cur === SOMEDAY ? 'Was steht irgendwann an?' : 'Was steht an?';
+  $('#cText').placeholder = { erledigen: 'Was steht an?', besorgen: 'Was braucht’s?', einpacken: 'Was muss mit?' }[ui.group] || 'Was steht an?';
 }
 const cycle = (w) => (w === 'wir' ? me : w === me ? other() : 'wir');
 
