@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Zu zweit 1006</title>
+<title>Zu zweit 1008</title>
 <meta name="apple-mobile-web-app-title" content="Zu zweit">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="mobile-web-app-capable" content="yes">
@@ -433,7 +433,7 @@ body[data-view="karte"] .v-liste, body[data-view="liste"] .v-karte { display: no
     <p id="sState" class="hint"></p>
     <button class="link" type="button" id="sSync">Jetzt abgleichen</button>
     <button class="link danger" type="button" id="sLeave">Liste auf diesem iPhone entfernen</button>
-    <p class="hint">Zu zweit 1006</p>
+    <p class="hint">Zu zweit 1008</p>
   </form>
 </dialog>
 
@@ -534,7 +534,12 @@ function nextEvent() { return sortedEvents().up.find((a) => a.datum) || sortedEv
 function ensureCur() {
   const { up, past } = sortedEvents();
   const ok = ui.cur === SOMEDAY || up.some((a) => a.id === ui.cur) || past.some((a) => a.id === ui.cur);
-  if (!ok || !ui.pick) ui.cur = (up[0] && up[0].id) || (past[0] && past[0].id) || SOMEDAY;
+  if (!ok || !ui.pick) {
+    // Standard beim Öffnen: der Anlass mit den meisten offenen To-dos (bei Gleichstand der frühere)
+    const open = (id) => tasksOf(id).filter((t) => !t.erledigt_am).length;
+    const best = [...up, ...past].reduce((b, a) => (open(a.id) > (b ? open(b.id) : 0) ? a : b), null);
+    ui.cur = (best && best.id) || (up[0] && up[0].id) || (past[0] && past[0].id) || SOMEDAY;
+  }
 }
 
 /* ---- lokale Änderungen ---- */

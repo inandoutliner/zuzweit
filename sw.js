@@ -1,6 +1,6 @@
 /* Zu zweit: App-Hülle und Kartenkacheln offline verfügbar halten (Flugzeug, Camper).
    Die Daten selbst laufen nie über diesen Speicher. */
-const CACHE = 'zuzweit-1006';
+const CACHE = 'zuzweit-1008';
 const TILES = 'zuzweit-kacheln-osm'; // neuer Name: alte CARTO-Kacheln („API key required“) fliegen raus
 const SHELL = ['./', './index.html', './config.js', './apple-touch-icon.png', './lib/leaflet/leaflet.js', './lib/leaflet/leaflet.css'];
 self.addEventListener('install', (e) => { e.waitUntil(caches.open(CACHE).then((c) => c.addAll(SHELL)).then(() => self.skipWaiting())); });

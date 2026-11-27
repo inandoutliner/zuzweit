@@ -1,11 +1,11 @@
 # Inhaltskarte
 
-Automatisch erzeugt mit `werkstatt/werkzeuge/karte.py`. Stand: 99f7e1c, 2026-11-27: Zu zweit 1005: Google Maps rein (Kurzbefehl/Link einfügen) und raus (In Google Maps ansehen)
+Automatisch erzeugt mit `werkstatt/werkzeuge/karte.py`. Stand: d7082e7, 2026-11-27: Zu zweit 1006 wiederhergestellt (1007 zurückgenommen)
 
 Vorgehen: Abschnitt hier finden → `grep -n "<Titel>" index.html` → nur diesen Bereich lesen.
 
-## `index.html` – Zu zweit 1006
-1258 Zeilen, 81 KB.
+## `index.html` – Zu zweit 1008
+1263 Zeilen, 81 KB.
 
 **Bedien-Bereiche (HTML)**
 
@@ -18,7 +18,7 @@ Vorgehen: Abschnitt hier finden → `grep -n "<Titel>" index.html` → nur diese
 - 411: `<dialog>` dSet – Einstellungen
 - 441: `<dialog>` dOrt – Ort
 - 455: `<dialog>` dShare – Link teilen
-- 706: `<section>` ${label}
+- 711: `<section>` ${label}
 
 **Abschnitte im Code** (Suchbegriff = Titel)
 
@@ -38,16 +38,16 @@ Vorgehen: Abschnitt hier finden → `grep -n "<Titel>" index.html` → nur diese
 | 224–469 | Karte |  |
 | 469–491 | Grundlagen | $, esc, uid, nowIso, makeCode, sha |
 | 491–512 | Datum | todayStr, dayDiff, fmtDate, fmtStamp, countText |
-| 512–540 | Zustand | other, nameOf, initial, saveLocal, liveEvents, liveTasks, evById, tasksOf, sortedEvents, nextEvent, ensureCur |
-| 540–565 | lokale Änderungen | putTask, putEvent, addTasks |
-| 565–577 | Server (Supabase-Funktionen) | rpc |
-| 577–627 | Abgleich | pendingCount, syncSoon, sync, applyServer, setStatus |
-| 627–644 | Live-Signal: „ich habe etwas geändert“ (Supabase Realtime Broadcast) | loadRealtime, ping |
-| 644–736 | Zeichnen | avatar, whoLabel, isNew, render, renderEvents, renderHero, renderList, row, renderComposer, cycle |
-| 736–805 | Bedienung | stampOn, grow, toast |
-| 805–842 | Blatt: Aufgabe | segHtml, bindSeg, segVal, openItem |
-| 842–868 | Blatt: Anlass | openEvent |
-| 868–905 | Blatt: Einstellungen | shareLink, shareTo, copy |
-| 905–971 | Start: Link lesen, anlegen, beitreten | parseLink, keepHash, openList, start, askWho |
-| 971–1102 | Karte: Orte mit Kommentar | liveOrte, ortById, isNewOrt, gmapsUrl, mapsUrl, coord, putOrt, setView, renderTabs, loadLeaflet, initMap, pinIcon … +5 |
-| 1102–1258 | Eingang aus Google Maps | parseGoogle, inNZ, importShared, renderOrte, openOrt, markSeen |
+| 512–545 | Zustand | other, nameOf, initial, saveLocal, liveEvents, liveTasks, evById, tasksOf, sortedEvents, nextEvent, ensureCur |
+| 545–570 | lokale Änderungen | putTask, putEvent, addTasks |
+| 570–582 | Server (Supabase-Funktionen) | rpc |
+| 582–632 | Abgleich | pendingCount, syncSoon, sync, applyServer, setStatus |
+| 632–649 | Live-Signal: „ich habe etwas geändert“ (Supabase Realtime Broadcast) | loadRealtime, ping |
+| 649–741 | Zeichnen | avatar, whoLabel, isNew, render, renderEvents, renderHero, renderList, row, renderComposer, cycle |
+| 741–810 | Bedienung | stampOn, grow, toast |
+| 810–847 | Blatt: Aufgabe | segHtml, bindSeg, segVal, openItem |
+| 847–873 | Blatt: Anlass | openEvent |
+| 873–910 | Blatt: Einstellungen | shareLink, shareTo, copy |
+| 910–976 | Start: Link lesen, anlegen, beitreten | parseLink, keepHash, openList, start, askWho |
+| 976–1107 | Karte: Orte mit Kommentar | liveOrte, ortById, isNewOrt, gmapsUrl, mapsUrl, coord, putOrt, setView, renderTabs, loadLeaflet, initMap, pinIcon … +5 |
+| 1107–1263 | Eingang aus Google Maps | parseGoogle, inNZ, importShared, renderOrte, openOrt, markSeen |
