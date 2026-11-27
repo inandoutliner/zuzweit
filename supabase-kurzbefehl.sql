@@ -5,7 +5,7 @@ returns text language plpgsql volatile security definer set search_path = public
 declare
   t text := coalesce(p_text, '');
   c text; ich text; l uuid; url text; voll text; s text; name text; q text;
-  m text[]; lat double precision; lng double precision; r extensions.http_response; j jsonb;
+  m text[]; lat double precision; lng double precision; r http_response; j jsonb;
 begin
   c := (regexp_match(t, 'k=([A-Za-z0-9_-]{24,})'))[1];
   ich := coalesce((regexp_match(t, 'ich=([ab])'))[1], 'a');
@@ -34,8 +34,8 @@ begin
     q := coalesce(nullif(q, ''), nullif(name, ''), nullif(btrim(t), ''));
     if q is not null then
       begin
-        r := extensions.http(('GET', 'https://nominatim.openstreetmap.org/search?format=jsonv2&limit=1&countrycodes=nz&q=' || extensions.urlencode(q),
-               array[extensions.http_header('User-Agent', 'zuzweit/1.0 (inandoutliner.github.io/zuzweit)')], null, null)::extensions.http_request);
+        r := http(('GET', 'https://nominatim.openstreetmap.org/search?format=jsonv2&limit=1&countrycodes=nz&q=' || urlencode(q),
+               array[http_header('User-Agent', 'zuzweit/1.0 (inandoutliner.github.io/zuzweit)')], null, null)::http_request);
         j := r.content::jsonb;
         if jsonb_array_length(j) > 0 then
           lat := (j->0->>'lat')::double precision; lng := (j->0->>'lon')::double precision;

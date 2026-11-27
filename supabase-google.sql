@@ -65,7 +65,7 @@ create or replace function public.zz_link_aufloesen(p_code text, p_url text)
 returns text language plpgsql volatile security definer set search_path = public, extensions as $$
 declare
   u text := btrim(p_url);
-  r extensions.http_response;
+  r http_response;
   loc text;
   body text;
   found text[];
@@ -74,13 +74,13 @@ begin
   if public.zz_liste_id(p_code) is null then
     raise exception 'Liste unbekannt' using errcode = 'P0002';
   end if;
-  begin perform extensions.http_set_curlopt('CURLOPT_TIMEOUT', '6'); exception when others then null; end;
-  begin perform extensions.http_set_curlopt('CURLOPT_FOLLOWLOCATION', '0'); exception when others then null; end;
+  begin perform http_set_curlopt('CURLOPT_TIMEOUT', '6'); exception when others then null; end;
+  begin perform http_set_curlopt('CURLOPT_FOLLOWLOCATION', '0'); exception when others then null; end;
   for i in 1..4 loop
     if u !~* '^https://(maps\.app\.goo\.gl|goo\.gl/maps|g\.co/kgs)/' then
       return u;                                   -- schon ein langer Link: fertig
     end if;
-    r := extensions.http(('GET', u, array[extensions.http_header('User-Agent', 'Mozilla/5.0 (iPhone; CPU iPhone OS 18_0 like Mac OS X)')], null, null)::extensions.http_request);
+    r := http(('GET', u, array[http_header('User-Agent', 'Mozilla/5.0 (iPhone; CPU iPhone OS 18_0 like Mac OS X)')], null, null)::http_request);
     select h.value into loc from unnest(r.headers) h where lower(h.field) = 'location' limit 1;
     if loc is not null then
       u := loc;                                   -- Weiterleitung: nächste Runde
