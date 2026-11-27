@@ -26,7 +26,7 @@ Online: https://inandoutliner.github.io/zuzweit/
 - Ort setzen: auf die Karte tippen, oben suchen (OpenStreetMap-Suche Nominatim, nur Neuseeland) oder „Mein Standort“.
 - Pins: Blau = von mir, Pink = von der anderen Person, Gelb mit Haken = dort gewesen.
 - Liste unter der Karte von Nord nach Süd, mit Abhaken („dort gewesen“) und „Hinfahren“ (öffnet Apple Karten).
-- Kartenhintergrund von CARTO (Voyager hell, Dark Matter dunkel) auf OpenStreetMap-Daten. Einmal angesehene Kacheln speichert die App für offline.
+- Kartenhintergrund: OpenStreetMap-Standardkarte (ohne Schlüssel; im Dunkelmodus per Filter abgedunkelt). Einmal angesehene Kacheln speichert die App für offline. CARTO (bis 1003) verlangt inzwischen einen API-Schlüssel.
 
 ## Daten und Zugriff
 
