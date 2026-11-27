@@ -87,7 +87,7 @@ begin
       continue;
     end if;
     -- Weiterleitung wurde schon verfolgt: Ziel-Link aus der Seite fischen
-    body := replace(replace(replace(coalesce(r.content, ''), '&amp;', '&'), '=', '='), '&', '&');
+    body := replace(replace(replace(coalesce(r.content, ''), '&amp;', '&'), '\u003d', '='), '\u0026', '&');
     found := regexp_match(body, '(https://www\.google\.[a-z.]+/maps/[^"''\s<>\\]+)');
     if found is not null then return found[1]; end if;
     found := regexp_match(body, 'center=(-?[0-9.]+)(?:%2C|,)(-?[0-9.]+)');
