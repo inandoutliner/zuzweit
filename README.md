@@ -8,6 +8,7 @@ Online: https://inandoutliner.github.io/zuzweit/
 - `config.js` – Supabase-Adresse und öffentlicher Schlüssel (dasselbe Projekt wie Weihnachten)
 - `supabase.sql` – Tabellen und Funktionen, einmal im Supabase SQL Editor ausführen
 - `supabase-orte.sql` – Ergänzung für die Karte (ab 1003), danach einmal ausführen
+- `supabase-google.sql` – Ergänzung für Google-Maps-Links (ab 1005), danach einmal ausführen
 - `lib/leaflet/` – Kartenbibliothek Leaflet 1.9.4 (BSD-2-Clause, © Vladimir Agafonkin), liegt im Repo, damit sie offline läuft
 - `sw.js` – hält die App offline verfügbar (Flugzeug, Camper)
 
@@ -27,6 +28,13 @@ Online: https://inandoutliner.github.io/zuzweit/
 - Pins: Blau = von mir, Pink = von der anderen Person, Gelb mit Haken = dort gewesen.
 - Liste unter der Karte von Nord nach Süd, mit Abhaken („dort gewesen“) und „Hinfahren“ (öffnet Apple Karten).
 - Kartenhintergrund: OpenStreetMap-Standardkarte (ohne Schlüssel; im Dunkelmodus per Filter abgedunkelt). Einmal angesehene Kacheln speichert die App für offline. CARTO (bis 1003) verlangt inzwischen einen API-Schlüssel.
+
+## Google Maps (ab 1005)
+
+- **Ausgang:** Jeder Ort hat „Google Maps“ (Popup) bzw. „In Google Maps ansehen“ (Ort-Blatt). Kam der Ort aus Google Maps, öffnet sich der Original-Eintrag, sonst ein Pin an den Koordinaten.
+- **Eingang mit Kurzbefehl:** Kurzbefehle-App → + → Name „Zu zweit“ → ⓘ → „Im Share-Sheet anzeigen“. Aktionen: „URL codieren“ (Kurzbefehleingabe) → „Text“ (Link aus Einstellungen → „Link für Kurzbefehl kopieren“, direkt dahinter Variable „URL-codierter Text“) → „URLs öffnen“. Dann in Google Maps: Teilen → Zu zweit.
+- **Eingang ohne Kurzbefehl:** Google Maps → Teilen → Kopieren, Link auf der Karte ins Suchfeld einfügen.
+- Kurzlinks (`maps.app.goo.gl`) löst die Datenbankfunktion `zz_link_aufloesen` auf (Erweiterung `http`, nur Google-Kurzlinks, nur mit gültigem Listen-Code). Klappt das nicht, sucht die App den Namen/die Adresse über OpenStreetMap.
 
 ## Daten und Zugriff
 

@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Zu zweit 1004</title>
+<title>Zu zweit 1005</title>
 <meta name="apple-mobile-web-app-title" content="Zu zweit">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="mobile-web-app-capable" content="yes">
@@ -249,12 +249,12 @@ body[data-view="karte"] .v-liste, body[data-view="liste"] .v-karte { display: no
 .leaflet-control-attribution a { color: #333 !important; }
 .leaflet-popup-content-wrapper { border-radius: 0; border: 1.5px solid var(--rule); background: var(--paper); color: var(--fg); box-shadow: 3px 3px 0 var(--pink); }
 .leaflet-popup-tip { background: var(--paper); border: 1.5px solid var(--rule); box-shadow: none; }
-.leaflet-popup-content { margin: 12px 14px; min-width: 180px; }
+.leaflet-popup-content { margin: 12px 14px; min-width: 230px; }
 .leaflet-popup-content b { display: block; font: 800 16px/1.1 var(--sans); text-transform: uppercase; letter-spacing: -.02em; }
 .leaflet-popup-content p { margin: 6px 0 0; font: 500 14px/1.35 var(--sans); white-space: pre-line; }
 .leaflet-popup-content .pm { display: block; margin-top: 6px; font: 500 11px/1.2 var(--mono); color: var(--muted); }
 .leaflet-popup-content .pb { display: flex; gap: 6px; margin-top: 10px; }
-.leaflet-popup-content .pb button, .leaflet-popup-content .pb a { flex: 1; min-height: 40px; display: grid; place-items: center; border: 1.5px solid var(--rule); background: var(--paper); color: var(--fg); text-decoration: none; font: 700 11px/1 var(--sans); text-transform: uppercase; letter-spacing: .03em; padding: 0 8px; }
+.leaflet-popup-content .pb button, .leaflet-popup-content .pb a { flex: 1; min-height: 40px; display: grid; place-items: center; border: 1.5px solid var(--rule); background: var(--paper); color: var(--fg); text-decoration: none; font: 700 11px/1 var(--sans); text-transform: uppercase; letter-spacing: .03em; padding: 0 8px; white-space: nowrap; }
 .leaflet-popup-content .pb a { background: var(--accent); border-color: var(--accent); color: var(--accent-ink); }
 .leaflet-container a.leaflet-popup-close-button { width: 32px; height: 32px; font-size: 22px; color: var(--fg); }
 .pin { width: 32px; height: 32px; border-radius: 50% 50% 50% 0; transform: rotate(-45deg); display: grid; place-items: center; border: 1.5px solid #101010; background: var(--accent); color: var(--accent-ink); box-shadow: 2px 2px 0 rgba(0,0,0,.25); }
@@ -318,8 +318,8 @@ body[data-view="karte"] .v-liste, body[data-view="liste"] .v-karte { display: no
   <!-- ===== Karte: Orte mit Kommentar ===== -->
   <section id="karte" class="v-karte wrap" aria-label="Karte">
     <form id="searchForm" class="msearch" role="search" autocomplete="off">
-      <label for="q" class="sr">Ort in Neuseeland suchen</label>
-      <input id="q" type="search" enterkeyhint="search" placeholder="Ort suchen, z. B. Cathedral Cove">
+      <label for="q" class="sr">Ort in Neuseeland suchen oder Google-Maps-Link einfügen</label>
+      <input id="q" type="search" enterkeyhint="search" placeholder="Ort suchen oder Google-Maps-Link einfügen">
       <button class="btn" type="submit">Suchen</button>
     </form>
     <ul id="results" class="results" hidden></ul>
@@ -423,10 +423,17 @@ body[data-view="karte"] .v-liste, body[data-view="liste"] .v-karte { display: no
       <p class="hint">Wer diesen Link hat, kann die Liste lesen und ändern. Nur an die richtige Person schicken.</p>
       <div class="btns"><button class="btn pink" type="button" id="sShare">Link teilen</button><button class="btn" type="button" id="sCopy">Kopieren</button></div>
     </div>
+    <hr>
+    <div class="field">
+      <span class="lbl">Aus Google Maps speichern</span>
+      <p class="hint">Einmal einen Kurzbefehl anlegen, dann steht „Zu zweit“ in Google Maps unter <b>Teilen</b>. So geht's: Kurzbefehle-App → <b>+</b> → Name „Zu zweit“ → unten <b>ⓘ</b> → <b>Im Share-Sheet anzeigen</b> an. Dann drei Aktionen: <b>URL codieren</b> (Kurzbefehleingabe) · <b>Text</b> (hier den kopierten Link einfügen und direkt dahinter die Variable „URL-codierter Text“) · <b>URLs öffnen</b>.</p>
+      <p class="hint">Ohne Kurzbefehl: in Google Maps <b>Teilen → Kopieren</b> und den Link auf der Karte ins Suchfeld einfügen.</p>
+      <div class="btns"><button class="btn" type="button" id="sShortcut">Link für Kurzbefehl kopieren</button></div>
+    </div>
     <p id="sState" class="hint"></p>
     <button class="link" type="button" id="sSync">Jetzt abgleichen</button>
     <button class="link danger" type="button" id="sLeave">Liste auf diesem iPhone entfernen</button>
-    <p class="hint">Zu zweit 1004</p>
+    <p class="hint">Zu zweit 1005</p>
   </form>
 </dialog>
 
@@ -438,7 +445,7 @@ body[data-view="karte"] .v-liste, body[data-view="liste"] .v-karte { display: no
     <div class="field"><label for="oNote">Kommentar</label><textarea id="oNote" maxlength="1000" rows="3" placeholder="Warum hierhin? Tipp von wem? Was beachten?"></textarea></div>
     <label class="check" id="oDoneWrap"><input type="checkbox" id="oDone"> Waren wir schon</label>
     <p id="oMeta" class="hint"></p>
-    <a class="btn" id="oMaps" target="_blank" rel="noopener">In Apple Karten öffnen</a>
+    <div class="btns"><a class="btn" id="oGmaps" target="_blank" rel="noopener">In Google Maps ansehen</a><a class="btn" id="oMaps" target="_blank" rel="noopener">Apple Karten</a></div>
     <button class="btn primary wide" value="save">Speichern</button>
     <button class="link danger" type="button" id="oDel">Ort löschen</button>
   </form>
@@ -885,6 +892,7 @@ $('#fSet').addEventListener('submit', (e) => {
 $('#sShare').addEventListener('click', () => shareTo(other()));
 $('#sCopy').addEventListener('click', () => copy(shareLink(other())));
 $('#sSync').addEventListener('click', () => sync());
+$('#sShortcut').addEventListener('click', () => copy(location.origin + location.pathname + '#k=' + code + '&ich=' + me + '&teilen='));
 $('#sLeave').addEventListener('click', () => {
   if (!confirm('Liste auf diesem iPhone entfernen? Auf dem Server und beim anderen iPhone bleibt sie erhalten. Mit dem Link kommst du jederzeit zurück.')) return;
   ['code', 'me', 'cache', 'out', 'seen', 'lastOk'].forEach(LS.del);
@@ -895,7 +903,9 @@ $('#sLeave').addEventListener('click', () => {
 function parseLink(s) {
   const m = String(s || '').match(/[#&?]k=([A-Za-z0-9_-]{24,})/); if (!m) return null;
   const w = String(s).match(/[#&?]ich=([ab])/);
-  return { code: m[1], ich: w ? w[1] : null };
+  const t = String(s).match(/[#&?]teilen=([^&]*)/);
+  let teilen = null; if (t && t[1]) { try { teilen = decodeURIComponent(t[1].replace(/\+/g, '%20')); } catch { teilen = t[1]; } }
+  return { code: m[1], ich: w ? w[1] : null, teilen };
 }
 function keepHash() { if (code) history.replaceState(null, '', location.pathname + '#k=' + code + (me ? '&ich=' + me : '')); }
 async function openList(c, ich) {
@@ -961,6 +971,7 @@ let map = null, markers = new Map(), temp = null, tempName = '', leafletLoading 
 const liveOrte = () => (S.orte || []).filter((o) => !o.geloescht);
 const ortById = (id) => (S.orte || []).find((o) => o.id === id);
 function isNewOrt(o) { return !!(o.von && o.von !== me && seenAt && !o.besucht_am && Date.parse(o.erstellt) > Date.parse(seenAt)); }
+const gmapsUrl = (o) => o.link || ('https://www.google.com/maps/search/?api=1&query=' + o.lat.toFixed(6) + '%2C' + o.lng.toFixed(6));
 const mapsUrl = (o) => 'https://maps.apple.com/?ll=' + o.lat.toFixed(6) + ',' + o.lng.toFixed(6) + '&q=' + encodeURIComponent(o.name);
 const coord = (lat, lng) => Math.abs(lat).toFixed(4) + '° ' + (lat < 0 ? 'S' : 'N') + ', ' + Math.abs(lng).toFixed(4) + '° ' + (lng < 0 ? 'W' : 'O');
 function putOrt(o) {
@@ -1014,7 +1025,7 @@ function popupHtml(o) {
   const meta = [(o.von ? nameOf(o.von) : '') + ' · ' + fmtStamp(o.erstellt)];
   if (o.besucht_am) meta.push('dort gewesen ' + fmtStamp(o.besucht_am));
   return `<b>${esc(o.name)}</b>${o.notiz ? `<p>${esc(o.notiz)}</p>` : ''}<span class="pm">${esc(meta.join(' · '))}</span>
-    <div class="pb"><button type="button" data-ort-edit="${esc(o.id)}">Bearbeiten</button><a href="${esc(mapsUrl(o))}" target="_blank" rel="noopener">Hinfahren</a></div>`;
+    <div class="pb"><button type="button" data-ort-edit="${esc(o.id)}">Bearbeiten</button><a href="${esc(gmapsUrl(o))}" target="_blank" rel="noopener">Google Maps</a></div>`;
 }
 function updateMarkers() {
   if (!map) return;
@@ -1057,11 +1068,11 @@ $('#searchForm').addEventListener('submit', async (e) => {
   e.preventDefault();
   const q = $('#q').value.trim(); const box = $('#results');
   if (!q) { box.hidden = true; return; }
+  if (/https?:\/\//i.test(q)) { box.hidden = true; $('#q').value = ''; $('#q').blur(); return importShared(q); }
   if (!navigator.onLine) return toast('Suchen braucht Netz. Tippen auf die Karte geht trotzdem.');
   box.hidden = false; box.innerHTML = '<li><button type="button" disabled><small>Suche …</small></button></li>';
   try {
-    const r = await fetch('https://nominatim.openstreetmap.org/search?format=jsonv2&countrycodes=nz&limit=6&accept-language=de&q=' + encodeURIComponent(q));
-    const list = await r.json();
+    const list = await nomi(q, 6);
     if (!list.length) { box.innerHTML = '<li><button type="button" disabled><small>Nichts gefunden. Anders schreiben oder auf die Karte tippen.</small></button></li>'; return; }
     box.innerHTML = list.map((x, i) => {
       const parts = String(x.display_name).split(', ');
@@ -1076,6 +1087,60 @@ $('#searchForm').addEventListener('submit', async (e) => {
     };
   } catch { box.innerHTML = '<li><button type="button" disabled><small>Suche hat nicht geklappt.</small></button></li>'; }
 });
+
+async function nomi(q, limit) {
+  const r = await fetch('https://nominatim.openstreetmap.org/search?format=jsonv2&countrycodes=nz&limit=' + limit + '&accept-language=de&q=' + encodeURIComponent(q));
+  return r.json();
+}
+
+/* ===== Eingang aus Google Maps ===== */
+// Liest Koordinaten und Namen aus einem langen Google-Maps-Link
+function parseGoogle(u) {
+  let s = String(u || '');
+  for (let i = 0; i < 2; i++) { try { const d = decodeURIComponent(s); if (d === s) break; s = d; } catch { break; } }
+  const num = '(-?\\d{1,3}(?:\\.\\d+)?)';
+  const pick = (re) => { const m = s.match(re); return m ? { lat: +m[1], lng: +m[2] } : null; };
+  const ll = pick(new RegExp('!3d' + num + '!4d' + num))
+    || pick(new RegExp('[?&](?:q|query|ll|center|daddr|destination|sll)=' + num + '(?:,|\\s|\\+)+' + num))
+    || pick(new RegExp('/(?:search|place|dir/[^/]*)/' + num + ',(?:\\s|\\+)*' + num))
+    || pick(new RegExp('@' + num + ',' + num));
+  const out = ll && Math.abs(ll.lat) <= 90 && Math.abs(ll.lng) <= 180 ? ll : {};
+  const pn = s.match(/\/place\/([^/@?]+)/);
+  if (pn) out.name = pn[1].replace(/\+/g, ' ').trim();
+  const qq = s.match(/[?&](?:q|query)=([^&]+)/);
+  if (qq && !/^-?\d/.test(qq[1])) out.q = qq[1].replace(/\+/g, ' ').trim();
+  return out;
+}
+const inNZ = (lat, lng) => lat > -53 && lat < -28 && lng > 160 && lng < 185;
+async function importShared(raw) {
+  const text = String(raw || '').trim(); if (!text) return;
+  setView('karte'); window.scrollTo({ top: 0 });
+  await initMap(); if (!map) return;
+  const um = text.match(/https?:\/\/[^\s<>"]+/);
+  const url = um ? um[0] : null;
+  const lines = text.replace(url || '', '').split(/\n/).map((x) => x.trim()).filter(Boolean);
+  let name = lines[0] || '';
+  let info = {};
+  if (url) {
+    toast('Lese Google-Maps-Link …');
+    let full = url;
+    if (/^https?:\/\/(maps\.app\.goo\.gl|goo\.gl\/maps|g\.co\/kgs)\//i.test(url)) {
+      try { full = (await rpc('zz_link_aufloesen', { p_code: code, p_url: url })) || url; } catch {}
+    }
+    info = parseGoogle(full);
+  }
+  name = name || info.name || '';
+  let lat = info.lat, lng = info.lng;
+  if (lat == null) {
+    const q = info.q || [lines[0], lines[1]].filter(Boolean).join(', ') || info.name || (!url ? text : '');
+    if (q && navigator.onLine) { try { const r = await nomi(q, 1); if (r[0]) { lat = +r[0].lat; lng = +r[0].lon; name = name || r[0].name || q; } } catch {} }
+  }
+  $('#toast').hidden = true;
+  if (lat == null) { $('#q').value = name || info.q || ''; toast('Ort nicht erkannt. Bitte suchen oder auf die Karte tippen.'); return; }
+  if (!inNZ(lat, lng)) { toast('Dieser Ort liegt nicht in Neuseeland.'); return; }
+  map.setView([lat, lng], 14); setTemp(lat, lng, name);
+  openOrt(null, { lat, lng, name, link: url });
+}
 
 /* Liste der Orte, von Nord nach Süd */
 function renderOrte() {
@@ -1122,6 +1187,7 @@ function openOrt(o, draft) {
   $('#oDoneWrap').hidden = !o; $('#oDel').hidden = !o;
   $('#oMeta').textContent = coord(src.lat, src.lng) + (o ? ' · gemerkt von ' + nameOf(o.von || me) + ', ' + fmtStamp(o.erstellt) : '');
   $('#oMaps').href = mapsUrl({ lat: src.lat, lng: src.lng, name: src.name || 'Ort' });
+  $('#oGmaps').href = gmapsUrl({ lat: src.lat, lng: src.lng, link: src.link || null });
   $('#dOrt').showModal();
   if (!o) setTimeout(() => $(src.name ? '#oNote' : '#oName').focus(), 50);
 }
@@ -1137,7 +1203,7 @@ $('#fOrt').addEventListener('submit', (e) => {
     if (!done) { o.besucht_am = null; o.besucht_von = null; }
     putOrt(o);
   } else if (draftOrt) {
-    putOrt({ id: uid(), name, notiz, lat: draftOrt.lat, lng: draftOrt.lng, von: me, erstellt: nowIso(), besucht_von: null, besucht_am: null, geloescht: false });
+    putOrt({ id: uid(), name, notiz, lat: draftOrt.lat, lng: draftOrt.lng, link: draftOrt.link || null, von: me, erstellt: nowIso(), besucht_von: null, besucht_am: null, geloescht: false });
     clearTemp(); toast('Gemerkt: ' + name);
   }
 });
@@ -1161,6 +1227,13 @@ window.addEventListener('offline', () => setStatus());
 setInterval(() => { if (document.visibilityState === 'visible') sync(); }, 20000);
 setInterval(() => { if (code) render(); }, 60 * 60 * 1000); // Countdown über Mitternacht
 
+// Teilen, während die App schon offen ist: Safari ändert dann nur die Adresse hinter #
+window.addEventListener('hashchange', async () => {
+  const p = parseLink(location.hash); if (!p || !p.teilen) return;
+  if (p.code !== code) await openList(p.code, p.ich || me); else keepHash();
+  importShared(p.teilen);
+});
+
 (async function boot() {
   const fromUrl = parseLink(location.hash);
   const saved = LS.get('code', null);
@@ -1168,6 +1241,7 @@ setInterval(() => { if (code) render(); }, 60 * 60 * 1000); // Countdown über M
   if (fromUrl) await openList(fromUrl.code, fromUrl.ich || me);
   else if (saved) await openList(saved, me);
   else $('#welcome').hidden = false;
+  if (fromUrl && fromUrl.teilen && code) importShared(fromUrl.teilen);
   if ('serviceWorker' in navigator && location.protocol === 'https:') navigator.serviceWorker.register('sw.js').catch(() => {});
 })();
 </script>
