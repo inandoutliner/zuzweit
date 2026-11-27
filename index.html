@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Zu zweit 1007</title>
+<title>Zu zweit 1006</title>
 <meta name="apple-mobile-web-app-title" content="Zu zweit">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="mobile-web-app-capable" content="yes">
@@ -426,14 +426,14 @@ body[data-view="karte"] .v-liste, body[data-view="liste"] .v-karte { display: no
     <hr>
     <div class="field">
       <span class="lbl">Aus Google Maps speichern</span>
-      <p class="hint">Mit einem Kurzbefehl steht „Zu zweit“ in Google Maps unter <b>Teilen</b> und speichert im Hintergrund. Aktionen: <b>URL codieren</b> (Kurzbefehleingabe) → <b>Inhalte von URL abrufen</b> mit dieser Adresse und direkt dahinter „URL-codierter Text“ → <b>Mitteilung anzeigen</b> (Inhalt der URL).</p>
-      <div class="btns"><button class="btn" type="button" id="sKb">Kurzbefehl-Adresse kopieren</button></div>
+      <p class="hint">Mit einem Kurzbefehl steht „Zu zweit“ in Google Maps unter <b>Teilen</b>. Er speichert im Hintergrund, du bleibst in Google Maps. Anleitung im README; die drei Werte hier kopieren:</p>
+      <div class="btns"><button class="btn" type="button" data-kb="url">1 · Adresse</button><button class="btn" type="button" data-kb="key">2 · Schlüssel</button><button class="btn" type="button" data-kb="text">3 · Text</button></div>
       <p class="hint">Ohne Kurzbefehl: in Google Maps <b>Teilen → Kopieren</b> und den Link auf der Karte ins Suchfeld einfügen.</p>
     </div>
     <p id="sState" class="hint"></p>
     <button class="link" type="button" id="sSync">Jetzt abgleichen</button>
     <button class="link danger" type="button" id="sLeave">Liste auf diesem iPhone entfernen</button>
-    <p class="hint">Zu zweit 1007</p>
+    <p class="hint">Zu zweit 1006</p>
   </form>
 </dialog>
 
@@ -892,7 +892,10 @@ $('#fSet').addEventListener('submit', (e) => {
 $('#sShare').addEventListener('click', () => shareTo(other()));
 $('#sCopy').addEventListener('click', () => copy(shareLink(other())));
 $('#sSync').addEventListener('click', () => sync());
-$('#sKb').addEventListener('click', () => copy(CFG.supabaseUrl + '/functions/v1/zuzweit-ort?k=' + code + '&ich=' + me + '&t='));
+document.querySelectorAll('[data-kb]').forEach((b) => b.addEventListener('click', () => {
+  const v = { url: CFG.supabaseUrl + '/rest/v1/rpc/zz_ort_aus_google', key: CFG.supabaseKey, text: 'k=' + code + '&ich=' + me + ' ' }[b.dataset.kb];
+  copy(v);
+}));
 $('#sLeave').addEventListener('click', () => {
   if (!confirm('Liste auf diesem iPhone entfernen? Auf dem Server und beim anderen iPhone bleibt sie erhalten. Mit dem Link kommst du jederzeit zurück.')) return;
   ['code', 'me', 'cache', 'out', 'seen', 'lastOk'].forEach(LS.del);

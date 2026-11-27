@@ -35,7 +35,10 @@ Online: https://inandoutliner.github.io/zuzweit/
 Ziel: zwischen Zu zweit und der Google-Maps-App hin- und herspringen.
 
 - **Zu zweit → Google Maps:** „Google Maps“ (Popup) bzw. „In Google Maps ansehen“ öffnen direkt die App (`comgooglemapsurl://` für gespeicherte Google-Links, sonst `comgooglemaps://?q=lat,lng`).
-- **Google Maps → Zu zweit (Kurzbefehl, speichert im Hintergrund):** Edge Function `zuzweit-ort` (Code in `supabase/functions/zuzweit-ort/index.ts`, im Dashboard per Editor anlegen, „Verify JWT“ aus). Kurzbefehl: Share-Sheet-Eingabe → „URL codieren“ → „Inhalte von URL abrufen“ (Adresse aus Einstellungen → „Kurzbefehl-Adresse kopieren“, direkt dahinter „URL-codierter Text“; GET, keine Header) → „Mitteilung anzeigen“ (Inhalt der URL).
+- **Google Maps → Zu zweit (Kurzbefehl, speichert im Hintergrund):** Kurzbefehle-App → + → Name „Zu zweit“ → ⓘ → „Im Share-Sheet anzeigen“. Aktionen:
+  1. „Inhalt von URL abrufen“: URL = Wert 1 (Einstellungen → „1 · Adresse“), Methode POST, Header `apikey` = Wert 2, Anfragetext JSON mit Feld `p_text` (Text) = Wert 3 und direkt dahinter die Variable „Kurzbefehleingabe“.
+  2. „Mitteilung anzeigen“ mit „Inhalt der URL“.
+  Optional davor „Nach Eingabe fragen“ (Kommentar) und im JSON ein zweites Feld `p_notiz` mit „Angegebene Eingabe“.
 - **Ohne Kurzbefehl:** Google Maps → Teilen → Kopieren, Link auf der Karte ins Suchfeld einfügen.
 - Server: `zz_ort_aus_google` (supabase-kurzbefehl.sql) liest Code + Person aus dem Text, löst Kurzlinks über `zz_link_aufloesen` auf (supabase-google.sql, Erweiterung `http`), fällt sonst auf OpenStreetMap-Suche zurück und speichert nur Orte in Neuseeland.
 
