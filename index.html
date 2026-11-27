@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Zu zweit 1002</title>
+<title>Zu zweit 1003</title>
 <meta name="apple-mobile-web-app-title" content="Zu zweit">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="mobile-web-app-capable" content="yes">
@@ -171,6 +171,7 @@ details.donebox[open] summary::after { content: "–"; }
 .btn.primary { background: var(--accent); color: var(--accent-ink); border-color: var(--accent); }
 .btn.pink { background: var(--pink); border-color: var(--pink); color: var(--stamp-ink); }
 .btn.wide { width: 100%; }
+a.btn { text-decoration: none; color: var(--fg); }
 .link { border: 0; background: none; padding: 12px 0; min-height: 44px; font: 700 11.5px/1 var(--sans); text-transform: uppercase; letter-spacing: .04em; text-decoration: underline; text-underline-offset: 3px; }
 .link.danger { color: var(--red); }
 .field { display: grid; gap: 7px; }
@@ -211,6 +212,57 @@ dialog.sheet[open] { animation: up .32s var(--ease); }
   background: var(--fg); color: var(--bg); display: flex; align-items: center; gap: 12px; padding: 4px 4px 4px 14px; font: 600 14px/1.25 var(--sans); box-shadow: 4px 4px 0 var(--pink); }
 .toast span { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; max-width: 60vw; }
 .toast button { flex: 0 0 auto; min-height: 40px; border: 0; background: var(--butter); color: var(--stamp-ink); padding: 0 12px; font: 800 11px/1 var(--sans); text-transform: uppercase; letter-spacing: .04em; }
+
+/* ---------- Ansicht wechseln: Liste / Karte ---------- */
+body[data-view="karte"] .v-liste, body[data-view="liste"] .v-karte { display: none !important; }
+.tabs { display: flex; gap: 6px; margin-top: 8px; }
+.tabs button { flex: 1; position: relative; min-height: 40px; border: 1.5px solid var(--rule); background: var(--paper); font: 800 13px/1 var(--sans); text-transform: uppercase; letter-spacing: .02em; }
+.tabs button::after { content: ""; position: absolute; inset: -3px 0; }
+.tabs button[aria-pressed="true"] { background: var(--fg); color: var(--bg); }
+.tabs .newdot { position: absolute; top: 6px; right: 8px; width: 8px; height: 8px; border-radius: 50%; background: var(--pink); }
+
+/* ---------- Karte ---------- */
+.msearch { display: flex; gap: 8px; padding: 12px 16px 0; }
+.msearch input { flex: 1; min-width: 0; min-height: 46px; padding: 10px 12px; border: 1.5px solid var(--rule); border-radius: 0; background: var(--paper); font: 500 16px/1.3 var(--sans); -webkit-appearance: none; appearance: none; }
+.results { list-style: none; margin: 8px 16px 0; padding: 0; border: 1.5px solid var(--rule); background: var(--paper); }
+.results button { width: 100%; text-align: left; border: 0; border-bottom: 1px solid var(--soft); background: none; padding: 10px 12px; min-height: 48px; display: grid; gap: 2px; }
+.results li:last-child button { border-bottom: 0; }
+.results b { font: 700 15px/1.2 var(--sans); }
+.results small { font: 500 12px/1.3 var(--sans); color: var(--muted); }
+.mapbox { position: relative; margin: 10px 16px 0; isolation: isolate; z-index: 0; } /* Leaflet-Ebenen bleiben unter Kopfzeile */
+#map { height: 56dvh; min-height: 320px; border: 1.5px solid var(--rule); background: var(--soft); }
+.maphint { margin: 8px 16px 0; font: 400 17px/1.2 var(--serif); color: var(--muted); }
+.mapbtn { position: absolute; right: 10px; bottom: 26px; z-index: 800; width: 46px; height: 46px; border: 1.5px solid var(--rule); background: var(--paper); color: var(--fg); display: grid; place-items: center; }
+.pickbar { position: absolute; left: 10px; right: 64px; bottom: 26px; z-index: 800; display: flex; align-items: center; gap: 8px; background: var(--paper); border: 1.5px solid var(--rule); padding: 4px 4px 4px 12px; box-shadow: 3px 3px 0 var(--pink); }
+.pickbar span { flex: 1; min-width: 0; font: 600 14px/1.2 var(--sans); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.pickbar .btn { min-height: 40px; padding: 0 12px; }
+.pickbar .x { width: 40px; height: 40px; border: 0; background: none; display: grid; place-items: center; }
+.places { padding: 6px 16px 24px; }
+.places .gh { margin-top: 6px; }
+.go { width: 44px; height: 44px; border: 0; background: none; display: grid; place-items: center; padding: 0; margin-right: -6px; color: var(--fg); }
+.item .note { font: 500 14px/1.3 var(--sans); color: var(--muted); overflow-wrap: anywhere; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+.leaflet-container { font: 500 14px/1.3 var(--sans); background: var(--soft); }
+.leaflet-bar { border: 1.5px solid var(--rule) !important; border-radius: 0 !important; box-shadow: none !important; }
+.leaflet-bar a { border-radius: 0 !important; width: 40px !important; height: 40px !important; line-height: 40px !important; background: var(--paper) !important; color: var(--fg) !important; border-bottom-color: var(--soft) !important; }
+.leaflet-control-attribution { font: 500 10px/1.3 var(--sans) !important; background: rgba(255,255,255,.75) !important; color: #333 !important; }
+.leaflet-control-attribution a { color: #333 !important; }
+.leaflet-popup-content-wrapper { border-radius: 0; border: 1.5px solid var(--rule); background: var(--paper); color: var(--fg); box-shadow: 3px 3px 0 var(--pink); }
+.leaflet-popup-tip { background: var(--paper); border: 1.5px solid var(--rule); box-shadow: none; }
+.leaflet-popup-content { margin: 12px 14px; min-width: 180px; }
+.leaflet-popup-content b { display: block; font: 800 16px/1.1 var(--sans); text-transform: uppercase; letter-spacing: -.02em; }
+.leaflet-popup-content p { margin: 6px 0 0; font: 500 14px/1.35 var(--sans); white-space: pre-line; }
+.leaflet-popup-content .pm { display: block; margin-top: 6px; font: 500 11px/1.2 var(--mono); color: var(--muted); }
+.leaflet-popup-content .pb { display: flex; gap: 6px; margin-top: 10px; }
+.leaflet-popup-content .pb button, .leaflet-popup-content .pb a { flex: 1; min-height: 40px; display: grid; place-items: center; border: 1.5px solid var(--rule); background: var(--paper); color: var(--fg); text-decoration: none; font: 700 11px/1 var(--sans); text-transform: uppercase; letter-spacing: .03em; padding: 0 8px; }
+.leaflet-popup-content .pb a { background: var(--accent); border-color: var(--accent); color: var(--accent-ink); }
+.leaflet-container a.leaflet-popup-close-button { width: 32px; height: 32px; font-size: 22px; color: var(--fg); }
+.pin { width: 32px; height: 32px; border-radius: 50% 50% 50% 0; transform: rotate(-45deg); display: grid; place-items: center; border: 1.5px solid #101010; background: var(--accent); color: var(--accent-ink); box-shadow: 2px 2px 0 rgba(0,0,0,.25); }
+.pin span { transform: rotate(45deg); font: 800 12px/1 var(--sans); text-transform: uppercase; }
+.pin.other { background: var(--pink); color: #101010; }
+.pin.done { background: var(--butter); color: #101010; }
+.pin.temp { background: #101010; color: #fff; border-color: #fff; }
+.check { display: flex; gap: 12px; align-items: center; min-height: 44px; font: 700 13px/1.2 var(--sans); text-transform: uppercase; letter-spacing: .03em; }
+.check input { width: 24px; height: 24px; accent-color: var(--accent); margin: 0; }
 
 @media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation: none !important; transition: none !important; } .stamp { display: none; } }
 </style>
@@ -256,9 +308,33 @@ dialog.sheet[open] { animation: up .32s var(--ease); }
         <svg class="i" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.6 1.6 0 0 0 .3 1.8l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.6 1.6 0 0 0-1.8-.3 1.6 1.6 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.1a1.6 1.6 0 0 0-1-1.5 1.6 1.6 0 0 0-1.8.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.6 1.6 0 0 0 .3-1.8 1.6 1.6 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.1a1.6 1.6 0 0 0 1.5-1 1.6 1.6 0 0 0-.3-1.8l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.6 1.6 0 0 0 1.8.3H9a1.6 1.6 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.1a1.6 1.6 0 0 0 1 1.5 1.6 1.6 0 0 0 1.8-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.6 1.6 0 0 0-.3 1.8V9a1.6 1.6 0 0 0 1.5 1H21a2 2 0 1 1 0 4h-.1a1.6 1.6 0 0 0-1.5 1z"/></svg>
       </button>
     </div>
+    <div class="wrap tabs" id="tabs" role="group" aria-label="Ansicht">
+      <button type="button" data-view="liste" aria-pressed="true">Liste</button>
+      <button type="button" data-view="karte" aria-pressed="false">Karte</button>
+    </div>
   </header>
 
-  <div class="wrap">
+  <!-- ===== Karte: Orte mit Kommentar ===== -->
+  <section id="karte" class="v-karte wrap" aria-label="Karte">
+    <form id="searchForm" class="msearch" role="search" autocomplete="off">
+      <label for="q" class="sr">Ort in Neuseeland suchen</label>
+      <input id="q" type="search" enterkeyhint="search" placeholder="Ort suchen, z. B. Cathedral Cove">
+      <button class="btn" type="submit">Suchen</button>
+    </form>
+    <ul id="results" class="results" hidden></ul>
+    <div class="mapbox">
+      <div id="map" role="application" aria-label="Karte von Neuseeland"></div>
+      <div id="pickBar" class="pickbar" hidden><span id="pickText"></span><button class="btn primary" type="button" id="pickSave">Speichern</button><button class="x" type="button" id="pickX" aria-label="Abbrechen"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg></button></div>
+      <button id="locate" class="mapbtn" type="button" aria-label="Mein Standort"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3"/></svg></button>
+    </div>
+    <p class="maphint">Auf die Karte tippen oder suchen, um einen Ort zu merken.</p>
+    <div class="places">
+      <div class="gh"><h2>Orte</h2><span id="orteN"></span></div>
+      <ul id="orte" class="items"></ul>
+    </div>
+  </section>
+
+  <div class="wrap v-liste">
     <div id="tip" class="tip" hidden>
       <p>Tipp: In Safari auf <b>Teilen</b> → <b>Zum Home-Bildschirm</b>. Dann ist die Liste eine App.</p>
       <button id="tipX" type="button" aria-label="Tipp schließen"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
@@ -286,7 +362,7 @@ dialog.sheet[open] { animation: up .32s var(--ease); }
     <main id="list" aria-label="Aufgaben"></main>
   </div>
 
-  <form id="composer" class="composer" autocomplete="off">
+  <form id="composer" class="composer v-liste" autocomplete="off">
     <div class="wrap">
       <div class="row1">
         <div id="cGroup" class="chips" role="group" aria-label="Gruppe" style="display:flex;gap:6px"></div>
@@ -349,7 +425,21 @@ dialog.sheet[open] { animation: up .32s var(--ease); }
     <p id="sState" class="hint"></p>
     <button class="link" type="button" id="sSync">Jetzt abgleichen</button>
     <button class="link danger" type="button" id="sLeave">Liste auf diesem iPhone entfernen</button>
-    <p class="hint">Zu zweit 1002</p>
+    <p class="hint">Zu zweit 1003</p>
+  </form>
+</dialog>
+
+<!-- ===== Blatt: Ort ===== -->
+<dialog id="dOrt" class="sheet" aria-label="Ort">
+  <form method="dialog" id="fOrt">
+    <div class="sh"><h2 id="oHead">Ort</h2><button class="x" value="cancel" formnovalidate aria-label="Schließen"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg></button></div>
+    <div class="field"><label for="oName">Name</label><input id="oName" required maxlength="120"></div>
+    <div class="field"><label for="oNote">Kommentar</label><textarea id="oNote" maxlength="1000" rows="3" placeholder="Warum hierhin? Tipp von wem? Was beachten?"></textarea></div>
+    <label class="check" id="oDoneWrap"><input type="checkbox" id="oDone"> Waren wir schon</label>
+    <p id="oMeta" class="hint"></p>
+    <a class="btn" id="oMaps" target="_blank" rel="noopener">In Apple Karten öffnen</a>
+    <button class="btn primary wide" value="save">Speichern</button>
+    <button class="link danger" type="button" id="oDel">Ort löschen</button>
   </form>
 </dialog>
 
@@ -413,9 +503,9 @@ function countText(n) {
 
 /* ===== Zustand ===== */
 let code = null, me = null, chanName = null;
-let S = { namen: {}, anlaesse: [], aufgaben: [] };   // Stand vom Server (+ eigene, noch nicht gespeicherte Änderungen)
-let OUT = { anlaesse: {}, aufgaben: {}, namen: null }; // Ausgang: was noch zum Server muss
-let ui = { cur: null, pick: false, filter: 'alle', group: 'erledigen', owner: 'wir', doneOpen: false };
+let S = { namen: {}, anlaesse: [], aufgaben: [], orte: [] };   // Stand vom Server (+ eigene, noch nicht gespeicherte Änderungen)
+let OUT = { anlaesse: {}, aufgaben: {}, orte: {}, namen: null }; // Ausgang: was noch zum Server muss
+let ui = { view: 'liste', cur: null, pick: false, filter: 'alle', group: 'erledigen', owner: 'wir', doneOpen: false };
 let seenAt = null; // bis wann der andere Eintrag „gesehen“ ist
 const other = () => (me === 'a' ? 'b' : 'a');
 const nameOf = (p) => (S.namen && S.namen[p]) || (p === 'a' ? 'Person 1' : 'Person 2');
@@ -478,21 +568,21 @@ async function rpc(fn, body) {
 
 /* ===== Abgleich ===== */
 let syncing = false, again = false, syncTimer = null, lastOk = LS.get('lastOk', null), lastErr = null, backoff = 0;
-function pendingCount() { return Object.keys(OUT.anlaesse).length + Object.keys(OUT.aufgaben).length + (OUT.namen ? 1 : 0); }
+function pendingCount() { return Object.keys(OUT.anlaesse).length + Object.keys(OUT.aufgaben).length + Object.keys(OUT.orte || {}).length + (OUT.namen ? 1 : 0); }
 function syncSoon(ms = 350) { clearTimeout(syncTimer); syncTimer = setTimeout(sync, ms); }
 async function sync() {
   if (!code) return;
   if (syncing) { again = true; return; }
   if (!navigator.onLine) { setStatus(); return; }
   syncing = true; setStatus('busy');
-  const sent = { anlaesse: { ...OUT.anlaesse }, aufgaben: { ...OUT.aufgaben }, namen: OUT.namen };
+  const sent = { anlaesse: { ...OUT.anlaesse }, aufgaben: { ...OUT.aufgaben }, orte: { ...(OUT.orte || {}) }, namen: OUT.namen };
   const hadChanges = pendingCount() > 0;
   try {
     const res = hadChanges
-      ? await rpc('zz_speichern', { p_code: code, p_anlaesse: Object.values(sent.anlaesse), p_aufgaben: Object.values(sent.aufgaben), p_namen: sent.namen })
+      ? await rpc('zz_speichern', Object.assign({ p_code: code, p_anlaesse: Object.values(sent.anlaesse), p_aufgaben: Object.values(sent.aufgaben), p_namen: sent.namen }, Object.keys(sent.orte).length ? { p_orte: Object.values(sent.orte) } : {}))
       : await rpc('zz_laden', { p_code: code });
     // Gesendetes aus dem Ausgang nehmen, sofern es seitdem nicht noch einmal geändert wurde
-    for (const k of ['anlaesse', 'aufgaben']) for (const id in sent[k]) if (OUT[k][id] && OUT[k][id].geaendert === sent[k][id].geaendert) delete OUT[k][id];
+    for (const k of ['anlaesse', 'aufgaben', 'orte']) for (const id in sent[k]) if (OUT[k][id] && OUT[k][id].geaendert === sent[k][id].geaendert) delete OUT[k][id];
     if (OUT.namen === sent.namen) OUT.namen = null;
     applyServer(res);
     lastOk = nowIso(); LS.set('lastOk', lastOk); lastErr = null; backoff = 0;
@@ -510,7 +600,8 @@ async function sync() {
 function applyServer(res) {
   if (!res) return;
   const merge = (rows, out) => { const m = new Map((rows || []).map((r) => [r.id, r])); for (const id in out) m.set(id, out[id]); return [...m.values()]; };
-  S = { namen: OUT.namen || res.namen || {}, anlaesse: merge(res.anlaesse, OUT.anlaesse), aufgaben: merge(res.aufgaben, OUT.aufgaben) };
+  S = { namen: OUT.namen || res.namen || {}, anlaesse: merge(res.anlaesse, OUT.anlaesse), aufgaben: merge(res.aufgaben, OUT.aufgaben),
+        orte: res.orte ? merge(res.orte, OUT.orte) : (S.orte || []) };
   saveLocal(); render();
 }
 function setStatus(force) {
@@ -554,7 +645,7 @@ const CHECK = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12.5l4.5 
 function render() {
   if (!code) return;
   ensureCur();
-  renderEvents(); renderHero(); renderList(); renderComposer(); setStatus();
+  renderEvents(); renderHero(); renderList(); renderComposer(); renderTabs(); renderOrte(); setStatus();
 }
 function renderEvents() {
   const { up, past } = sortedEvents();
@@ -807,7 +898,7 @@ function parseLink(s) {
 }
 function keepHash() { if (code) history.replaceState(null, '', location.pathname + '#k=' + code + (me ? '&ich=' + me : '')); }
 async function openList(c, ich) {
-  if (c !== LS.get('code', null)) { S = { namen: {}, anlaesse: [], aufgaben: [] }; OUT = { anlaesse: {}, aufgaben: {}, namen: null }; LS.del('cache'); LS.del('out'); LS.del('seen'); }
+  if (c !== LS.get('code', null)) { S = { namen: {}, anlaesse: [], aufgaben: [], orte: [] }; OUT = { anlaesse: {}, aufgaben: {}, orte: {}, namen: null }; LS.del('cache'); LS.del('out'); LS.del('seen'); }
   code = c; LS.set('code', code);
   if (ich) { me = ich; LS.set('me', me); }
   chanName = 'zz-' + (await sha('kanal:' + code)).slice(0, 32);
@@ -817,7 +908,9 @@ async function openList(c, ich) {
 async function start() {
   $('#welcome').hidden = true; $('#app').hidden = false;
   S = LS.get('cache', S); OUT = LS.get('out', OUT);
-  if (!OUT.anlaesse) OUT = { anlaesse: {}, aufgaben: {}, namen: null };
+  if (!OUT.anlaesse) OUT = { anlaesse: {}, aufgaben: {}, orte: {}, namen: null };
+  S.orte = S.orte || []; OUT.orte = OUT.orte || {};
+  setView(LS.get('view', 'liste'));
   ui.group = LS.get('group', 'erledigen'); ui.owner = LS.get('owner', 'wir');
   seenAt = LS.get('seen', null) || new Date(Date.now() - 864e5).toISOString();
   if (!me) me = 'a';
@@ -859,6 +952,201 @@ $('#joinForm').addEventListener('submit', async (e) => {
   const p = parseLink($('#joinLink').value);
   if (!p) { $('#welcomeErr').textContent = 'Das sieht nicht wie ein Zu-zweit-Link aus. Er enthält „#k=“.'; return; }
   await openList(p.code, p.ich);
+});
+
+/* ===== Karte: Orte mit Kommentar ===== */
+const NZ = [[-47.4, 166.3], [-34.3, 178.7]];
+let map = null, markers = new Map(), temp = null, tempName = '', leafletLoading = null;
+const liveOrte = () => (S.orte || []).filter((o) => !o.geloescht);
+const ortById = (id) => (S.orte || []).find((o) => o.id === id);
+function isNewOrt(o) { return !!(o.von && o.von !== me && seenAt && !o.besucht_am && Date.parse(o.erstellt) > Date.parse(seenAt)); }
+const mapsUrl = (o) => 'https://maps.apple.com/?ll=' + o.lat.toFixed(6) + ',' + o.lng.toFixed(6) + '&q=' + encodeURIComponent(o.name);
+const coord = (lat, lng) => Math.abs(lat).toFixed(4) + '° ' + (lat < 0 ? 'S' : 'N') + ', ' + Math.abs(lng).toFixed(4) + '° ' + (lng < 0 ? 'W' : 'O');
+function putOrt(o) {
+  o.geaendert = nowIso();
+  const i = S.orte.findIndex((x) => x.id === o.id);
+  if (i >= 0) S.orte[i] = o; else S.orte.push(o);
+  OUT.orte[o.id] = { ...o };
+  saveLocal(); render(); syncSoon();
+}
+
+function setView(v) {
+  ui.view = v === 'karte' ? 'karte' : 'liste'; LS.set('view', ui.view);
+  document.body.dataset.view = ui.view;
+  renderTabs();
+  if (ui.view === 'karte') initMap();
+}
+function renderTabs() {
+  const n = liveOrte().filter(isNewOrt).length;
+  for (const b of $('#tabs').children) {
+    b.setAttribute('aria-pressed', b.dataset.view === ui.view);
+    if (b.dataset.view === 'karte') b.innerHTML = 'Karte' + (n ? `<span class="newdot" aria-label="${n} neue Orte"></span>` : '');
+  }
+}
+$('#tabs').addEventListener('click', (e) => { const b = e.target.closest('button[data-view]'); if (b) { setView(b.dataset.view); window.scrollTo({ top: 0 }); } });
+
+function loadLeaflet() {
+  if (window.L) return Promise.resolve();
+  if (leafletLoading) return leafletLoading;
+  leafletLoading = new Promise((ok, fail) => {
+    const css = document.createElement('link'); css.rel = 'stylesheet'; css.href = 'lib/leaflet/leaflet.css'; document.head.appendChild(css);
+    const js = document.createElement('script'); js.src = 'lib/leaflet/leaflet.js'; js.onload = ok; js.onerror = () => { leafletLoading = null; fail(new Error('Karte konnte nicht laden')); };
+    document.head.appendChild(js);
+  });
+  return leafletLoading;
+}
+async function initMap() {
+  if (map) { setTimeout(() => map.invalidateSize(), 50); return; }
+  try { await loadLeaflet(); } catch (e) { toast(e.message); return; }
+  if (map) return;
+  const dark = matchMedia('(prefers-color-scheme: dark)').matches;
+  map = L.map('map', { zoomControl: true, attributionControl: true, maxBounds: [[-53, 160], [-28, 185]], maxBoundsViscosity: .8, minZoom: 4 });
+  L.tileLayer(dark ? 'https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png' : 'https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png', {
+    subdomains: 'abcd', maxZoom: 19, attribution: '© <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> · © <a href="https://carto.com/attributions">CARTO</a>',
+  }).addTo(map);
+  map.attributionControl.setPrefix(false);
+  map.fitBounds(NZ);
+  map.on('click', (e) => setTemp(e.latlng.lat, e.latlng.lng, ''));
+  updateMarkers();
+}
+function pinIcon(cls, label) { return L.divIcon({ className: '', html: `<div class="pin ${cls}"><span>${esc(label)}</span></div>`, iconSize: [32, 32], iconAnchor: [16, 40], popupAnchor: [0, -38] }); }
+function popupHtml(o) {
+  const meta = [(o.von ? nameOf(o.von) : '') + ' · ' + fmtStamp(o.erstellt)];
+  if (o.besucht_am) meta.push('dort gewesen ' + fmtStamp(o.besucht_am));
+  return `<b>${esc(o.name)}</b>${o.notiz ? `<p>${esc(o.notiz)}</p>` : ''}<span class="pm">${esc(meta.join(' · '))}</span>
+    <div class="pb"><button type="button" data-ort-edit="${esc(o.id)}">Bearbeiten</button><a href="${esc(mapsUrl(o))}" target="_blank" rel="noopener">Hinfahren</a></div>`;
+}
+function updateMarkers() {
+  if (!map) return;
+  const live = liveOrte(); const ids = new Set(live.map((o) => o.id));
+  for (const [id, m] of markers) if (!ids.has(id)) { m.remove(); markers.delete(id); }
+  for (const o of live) {
+    const cls = o.besucht_am ? 'done' : (o.von === me ? 'me' : 'other');
+    const label = o.besucht_am ? '✓' : initial(o.von || me);
+    const key = [o.lat, o.lng, cls, label, o.name, o.notiz, o.besucht_am].join('|');
+    let m = markers.get(o.id);
+    if (!m) { m = L.marker([o.lat, o.lng], { icon: pinIcon(cls, label), title: o.name, keyboard: true }).addTo(map); m.bindPopup(''); markers.set(o.id, m); }
+    if (m._zzKey !== key) { m.setLatLng([o.lat, o.lng]); m.setIcon(pinIcon(cls, label)); m.setPopupContent(popupHtml(o)); m._zzKey = key; }
+  }
+}
+$('#map').addEventListener('click', (e) => { const b = e.target.closest('[data-ort-edit]'); if (b) { e.stopPropagation(); map.closePopup(); openOrt(ortById(b.dataset.ortEdit)); } }, true); // capture: Leaflet stoppt Klicks im Popup
+
+function setTemp(lat, lng, name) {
+  if (!map) return;
+  tempName = name || '';
+  if (!temp) temp = L.marker([lat, lng], { icon: pinIcon('temp', '+'), interactive: false }).addTo(map);
+  else temp.setLatLng([lat, lng]);
+  $('#pickText').textContent = name ? '„' + name + '“' : coord(lat, lng);
+  $('#pickBar').hidden = false;
+}
+function clearTemp() { if (temp) { temp.remove(); temp = null; } $('#pickBar').hidden = true; }
+$('#pickX').addEventListener('click', clearTemp);
+$('#pickSave').addEventListener('click', () => { if (!temp) return; const ll = temp.getLatLng(); openOrt(null, { lat: ll.lat, lng: ll.lng, name: tempName }); });
+
+$('#locate').addEventListener('click', () => {
+  if (!navigator.geolocation) return toast('Standort geht hier nicht');
+  toast('Suche Standort …');
+  navigator.geolocation.getCurrentPosition((p) => {
+    const { latitude: lat, longitude: lng } = p.coords;
+    map.setView([lat, lng], 13); setTemp(lat, lng, ''); $('#toast').hidden = true;
+  }, (err) => toast(err.code === 1 ? 'Standort nicht erlaubt (Einstellungen → Safari → Standort)' : 'Standort gerade nicht verfügbar'), { enableHighAccuracy: true, timeout: 15000, maximumAge: 60000 });
+});
+
+/* Suche über OpenStreetMap (Nominatim), nur Neuseeland, nur auf Knopfdruck */
+$('#searchForm').addEventListener('submit', async (e) => {
+  e.preventDefault();
+  const q = $('#q').value.trim(); const box = $('#results');
+  if (!q) { box.hidden = true; return; }
+  if (!navigator.onLine) return toast('Suchen braucht Netz. Tippen auf die Karte geht trotzdem.');
+  box.hidden = false; box.innerHTML = '<li><button type="button" disabled><small>Suche …</small></button></li>';
+  try {
+    const r = await fetch('https://nominatim.openstreetmap.org/search?format=jsonv2&countrycodes=nz&limit=6&accept-language=de&q=' + encodeURIComponent(q));
+    const list = await r.json();
+    if (!list.length) { box.innerHTML = '<li><button type="button" disabled><small>Nichts gefunden. Anders schreiben oder auf die Karte tippen.</small></button></li>'; return; }
+    box.innerHTML = list.map((x, i) => {
+      const parts = String(x.display_name).split(', ');
+      const name = x.name || parts[0];
+      return `<li><button type="button" data-i="${i}"><b>${esc(name)}</b><small>${esc(parts.slice(1, 4).join(', '))}</small></button></li>`;
+    }).join('');
+    box.onclick = (ev) => {
+      const b = ev.target.closest('button[data-i]'); if (!b) return;
+      const x = list[+b.dataset.i]; const lat = +x.lat, lng = +x.lon;
+      box.hidden = true; $('#q').blur();
+      map.setView([lat, lng], 12); setTemp(lat, lng, x.name || String(x.display_name).split(', ')[0]);
+    };
+  } catch { box.innerHTML = '<li><button type="button" disabled><small>Suche hat nicht geklappt.</small></button></li>'; }
+});
+
+/* Liste der Orte, von Nord nach Süd */
+function renderOrte() {
+  const live = liveOrte().sort((a, b) => b.lat - a.lat);
+  $('#orteN').textContent = live.length || '';
+  $('#orte').innerHTML = live.length ? live.map((o) => {
+    const meta = [];
+    if (isNewOrt(o)) meta.push(`<span class="new">neu von ${esc(nameOf(o.von))}</span>`);
+    else meta.push(esc(nameOf(o.von || me)));
+    if (o.besucht_am) meta.push(esc('dort gewesen ' + fmtStamp(o.besucht_am)));
+    return `<li class="item${o.besucht_am ? ' done' : ''}" data-ort="${esc(o.id)}">
+      <button type="button" class="tick" data-visit aria-label="${o.besucht_am ? 'Doch noch nicht dort gewesen' : 'Dort gewesen'}: ${esc(o.name)}" aria-pressed="${!!o.besucht_am}"><span>${CHECK}</span></button>
+      <button type="button" class="txt" data-oopen><span class="t">${esc(o.name)}</span>${o.notiz ? `<span class="note">${esc(o.notiz)}</span>` : ''}<span class="m">${meta.join(' · ')}</span></button>
+      <button type="button" class="go" data-fly aria-label="${esc(o.name)} auf der Karte zeigen"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s-7-6.2-7-11.5A7 7 0 0 1 19 9.5C19 14.8 12 21 12 21z"/><circle cx="12" cy="9.5" r="2.5"/></svg></button>
+    </li>`;
+  }).join('') : '<li class="empty"><p>Noch keine Orte.</p><small>Strände, Campingplätze, Fish ’n’ Chips: auf die Karte tippen oder oben suchen.</small></li>';
+  updateMarkers();
+}
+$('#orte').addEventListener('click', (e) => {
+  const li = e.target.closest('[data-ort]'); if (!li) return;
+  const o = ortById(li.dataset.ort); if (!o) return;
+  if (e.target.closest('[data-visit]')) {
+    const before = { ...o };
+    if (o.besucht_am) { o.besucht_am = null; o.besucht_von = null; } else { o.besucht_am = nowIso(); o.besucht_von = me; }
+    putOrt(o);
+    if (o.besucht_am) toast('Dort gewesen: ' + o.name, () => putOrt({ ...before }));
+  } else if (e.target.closest('[data-fly]')) {
+    if (!map) return;
+    $('.mapbox').scrollIntoView({ behavior: 'smooth', block: 'start' });
+    map.setView([o.lat, o.lng], Math.max(map.getZoom(), 12));
+    const m = markers.get(o.id); if (m) setTimeout(() => m.openPopup(), 250);
+  } else if (e.target.closest('[data-oopen]')) openOrt(o);
+});
+
+/* Blatt: Ort */
+let editingOrt = null, draftOrt = null;
+function openOrt(o, draft) {
+  editingOrt = o ? o.id : null; draftOrt = draft || null;
+  const src = o || draft;
+  $('#oHead').textContent = o ? 'Ort' : 'Ort merken';
+  $('#oName').value = src.name || '';
+  $('#oNote').value = o ? o.notiz || '' : '';
+  $('#oDone').checked = !!(o && o.besucht_am);
+  $('#oDoneWrap').hidden = !o; $('#oDel').hidden = !o;
+  $('#oMeta').textContent = coord(src.lat, src.lng) + (o ? ' · gemerkt von ' + nameOf(o.von || me) + ', ' + fmtStamp(o.erstellt) : '');
+  $('#oMaps').href = mapsUrl({ lat: src.lat, lng: src.lng, name: src.name || 'Ort' });
+  $('#dOrt').showModal();
+  if (!o) setTimeout(() => $(src.name ? '#oNote' : '#oName').focus(), 50);
+}
+$('#fOrt').addEventListener('submit', (e) => {
+  if (e.submitter && e.submitter.value !== 'save') return;
+  const name = $('#oName').value.trim(); if (!name) { e.preventDefault(); return; }
+  const notiz = $('#oNote').value.trim() || null;
+  if (editingOrt) {
+    const o = ortById(editingOrt); if (!o) return;
+    const done = $('#oDone').checked;
+    Object.assign(o, { name, notiz });
+    if (done && !o.besucht_am) { o.besucht_am = nowIso(); o.besucht_von = me; }
+    if (!done) { o.besucht_am = null; o.besucht_von = null; }
+    putOrt(o);
+  } else if (draftOrt) {
+    putOrt({ id: uid(), name, notiz, lat: draftOrt.lat, lng: draftOrt.lng, von: me, erstellt: nowIso(), besucht_von: null, besucht_am: null, geloescht: false });
+    clearTemp(); toast('Gemerkt: ' + name);
+  }
+});
+$('#oDel').addEventListener('click', () => {
+  const o = ortById(editingOrt); if (!o) return;
+  $('#dOrt').close();
+  const before = { ...o };
+  o.geloescht = true; putOrt(o);
+  toast('Gelöscht: ' + o.name, () => putOrt({ ...before, geloescht: false }));
 });
 
 /* Gesehen-Marke: erst beim Verlassen weitersetzen, damit „neu“ beim Öffnen sichtbar bleibt */
