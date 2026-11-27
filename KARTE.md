@@ -1,11 +1,11 @@
 # Inhaltskarte
 
-Automatisch erzeugt mit `werkstatt/werkzeuge/karte.py`. Stand: 6eae87d, 2026-11-27: Zu zweit 1004: Kartenhintergrund OpenStreetMap statt CARTO (CARTO verlangt jetzt API-Schlüssel)
+Automatisch erzeugt mit `werkstatt/werkzeuge/karte.py`. Stand: 99f7e1c, 2026-11-27: Zu zweit 1005: Google Maps rein (Kurzbefehl/Link einfügen) und raus (In Google Maps ansehen)
 
 Vorgehen: Abschnitt hier finden → `grep -n "<Titel>" index.html` → nur diesen Bereich lesen.
 
-## `index.html` – Zu zweit 1005
-1250 Zeilen, 81 KB.
+## `index.html` – Zu zweit 1006
+1258 Zeilen, 81 KB.
 
 **Bedien-Bereiche (HTML)**
 
@@ -47,7 +47,7 @@ Vorgehen: Abschnitt hier finden → `grep -n "<Titel>" index.html` → nur diese
 | 736–805 | Bedienung | stampOn, grow, toast |
 | 805–842 | Blatt: Aufgabe | segHtml, bindSeg, segVal, openItem |
 | 842–868 | Blatt: Anlass | openEvent |
-| 868–902 | Blatt: Einstellungen | shareLink, shareTo, copy |
-| 902–968 | Start: Link lesen, anlegen, beitreten | parseLink, keepHash, openList, start, askWho |
-| 968–1096 | Karte: Orte mit Kommentar | liveOrte, ortById, isNewOrt, gmapsUrl, mapsUrl, coord, putOrt, setView, renderTabs, loadLeaflet, initMap, pinIcon … +5 |
-| 1096–1250 | Eingang aus Google Maps | parseGoogle, inNZ, importShared, renderOrte, openOrt, markSeen |
+| 868–905 | Blatt: Einstellungen | shareLink, shareTo, copy |
+| 905–971 | Start: Link lesen, anlegen, beitreten | parseLink, keepHash, openList, start, askWho |
+| 971–1102 | Karte: Orte mit Kommentar | liveOrte, ortById, isNewOrt, gmapsUrl, mapsUrl, coord, putOrt, setView, renderTabs, loadLeaflet, initMap, pinIcon … +5 |
+| 1102–1258 | Eingang aus Google Maps | parseGoogle, inNZ, importShared, renderOrte, openOrt, markSeen |

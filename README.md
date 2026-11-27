@@ -9,6 +9,7 @@ Online: https://inandoutliner.github.io/zuzweit/
 - `supabase.sql` – Tabellen und Funktionen, einmal im Supabase SQL Editor ausführen
 - `supabase-orte.sql` – Ergänzung für die Karte (ab 1003), danach einmal ausführen
 - `supabase-google.sql` – Ergänzung für Google-Maps-Links (ab 1005), danach einmal ausführen
+- `supabase-kurzbefehl.sql` – Speichern direkt aus dem Kurzbefehl (ab 1006), danach einmal ausführen
 - `lib/leaflet/` – Kartenbibliothek Leaflet 1.9.4 (BSD-2-Clause, © Vladimir Agafonkin), liegt im Repo, damit sie offline läuft
 - `sw.js` – hält die App offline verfügbar (Flugzeug, Camper)
 
@@ -29,12 +30,17 @@ Online: https://inandoutliner.github.io/zuzweit/
 - Liste unter der Karte von Nord nach Süd, mit Abhaken („dort gewesen“) und „Hinfahren“ (öffnet Apple Karten).
 - Kartenhintergrund: OpenStreetMap-Standardkarte (ohne Schlüssel; im Dunkelmodus per Filter abgedunkelt). Einmal angesehene Kacheln speichert die App für offline. CARTO (bis 1003) verlangt inzwischen einen API-Schlüssel.
 
-## Google Maps (ab 1005)
+## Google Maps (ab 1006)
 
-- **Ausgang:** Jeder Ort hat „Google Maps“ (Popup) bzw. „In Google Maps ansehen“ (Ort-Blatt). Kam der Ort aus Google Maps, öffnet sich der Original-Eintrag, sonst ein Pin an den Koordinaten.
-- **Eingang mit Kurzbefehl:** Kurzbefehle-App → + → Name „Zu zweit“ → ⓘ → „Im Share-Sheet anzeigen“. Aktionen: „URL codieren“ (Kurzbefehleingabe) → „Text“ (Link aus Einstellungen → „Link für Kurzbefehl kopieren“, direkt dahinter Variable „URL-codierter Text“) → „URLs öffnen“. Dann in Google Maps: Teilen → Zu zweit.
-- **Eingang ohne Kurzbefehl:** Google Maps → Teilen → Kopieren, Link auf der Karte ins Suchfeld einfügen.
-- Kurzlinks (`maps.app.goo.gl`) löst die Datenbankfunktion `zz_link_aufloesen` auf (Erweiterung `http`, nur Google-Kurzlinks, nur mit gültigem Listen-Code). Klappt das nicht, sucht die App den Namen/die Adresse über OpenStreetMap.
+Ziel: zwischen Zu zweit und der Google-Maps-App hin- und herspringen.
+
+- **Zu zweit → Google Maps:** „Google Maps“ (Popup) bzw. „In Google Maps ansehen“ öffnen direkt die App (`comgooglemapsurl://` für gespeicherte Google-Links, sonst `comgooglemaps://?q=lat,lng`).
+- **Google Maps → Zu zweit (Kurzbefehl, speichert im Hintergrund):** Kurzbefehle-App → + → Name „Zu zweit“ → ⓘ → „Im Share-Sheet anzeigen“. Aktionen:
+  1. „Inhalt von URL abrufen“: URL = Wert 1 (Einstellungen → „1 · Adresse“), Methode POST, Header `apikey` = Wert 2, Anfragetext JSON mit Feld `p_text` (Text) = Wert 3 und direkt dahinter die Variable „Kurzbefehleingabe“.
+  2. „Mitteilung anzeigen“ mit „Inhalt der URL“.
+  Optional davor „Nach Eingabe fragen“ (Kommentar) und im JSON ein zweites Feld `p_notiz` mit „Angegebene Eingabe“.
+- **Ohne Kurzbefehl:** Google Maps → Teilen → Kopieren, Link auf der Karte ins Suchfeld einfügen.
+- Server: `zz_ort_aus_google` (supabase-kurzbefehl.sql) liest Code + Person aus dem Text, löst Kurzlinks über `zz_link_aufloesen` auf (supabase-google.sql, Erweiterung `http`), fällt sonst auf OpenStreetMap-Suche zurück und speichert nur Orte in Neuseeland.
 
 ## Daten und Zugriff
 

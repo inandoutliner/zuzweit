@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Zu zweit 1005</title>
+<title>Zu zweit 1006</title>
 <meta name="apple-mobile-web-app-title" content="Zu zweit">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="mobile-web-app-capable" content="yes">
@@ -426,14 +426,14 @@ body[data-view="karte"] .v-liste, body[data-view="liste"] .v-karte { display: no
     <hr>
     <div class="field">
       <span class="lbl">Aus Google Maps speichern</span>
-      <p class="hint">Einmal einen Kurzbefehl anlegen, dann steht „Zu zweit“ in Google Maps unter <b>Teilen</b>. So geht's: Kurzbefehle-App → <b>+</b> → Name „Zu zweit“ → unten <b>ⓘ</b> → <b>Im Share-Sheet anzeigen</b> an. Dann drei Aktionen: <b>URL codieren</b> (Kurzbefehleingabe) · <b>Text</b> (hier den kopierten Link einfügen und direkt dahinter die Variable „URL-codierter Text“) · <b>URLs öffnen</b>.</p>
+      <p class="hint">Mit einem Kurzbefehl steht „Zu zweit“ in Google Maps unter <b>Teilen</b>. Er speichert im Hintergrund, du bleibst in Google Maps. Anleitung im README; die drei Werte hier kopieren:</p>
+      <div class="btns"><button class="btn" type="button" data-kb="url">1 · Adresse</button><button class="btn" type="button" data-kb="key">2 · Schlüssel</button><button class="btn" type="button" data-kb="text">3 · Text</button></div>
       <p class="hint">Ohne Kurzbefehl: in Google Maps <b>Teilen → Kopieren</b> und den Link auf der Karte ins Suchfeld einfügen.</p>
-      <div class="btns"><button class="btn" type="button" id="sShortcut">Link für Kurzbefehl kopieren</button></div>
     </div>
     <p id="sState" class="hint"></p>
     <button class="link" type="button" id="sSync">Jetzt abgleichen</button>
     <button class="link danger" type="button" id="sLeave">Liste auf diesem iPhone entfernen</button>
-    <p class="hint">Zu zweit 1005</p>
+    <p class="hint">Zu zweit 1006</p>
   </form>
 </dialog>
 
@@ -445,7 +445,7 @@ body[data-view="karte"] .v-liste, body[data-view="liste"] .v-karte { display: no
     <div class="field"><label for="oNote">Kommentar</label><textarea id="oNote" maxlength="1000" rows="3" placeholder="Warum hierhin? Tipp von wem? Was beachten?"></textarea></div>
     <label class="check" id="oDoneWrap"><input type="checkbox" id="oDone"> Waren wir schon</label>
     <p id="oMeta" class="hint"></p>
-    <div class="btns"><a class="btn" id="oGmaps" target="_blank" rel="noopener">In Google Maps ansehen</a><a class="btn" id="oMaps" target="_blank" rel="noopener">Apple Karten</a></div>
+    <div class="btns"><a class="btn" id="oGmaps">In Google Maps ansehen</a><a class="btn" id="oMaps" target="_blank" rel="noopener">Apple Karten</a></div>
     <button class="btn primary wide" value="save">Speichern</button>
     <button class="link danger" type="button" id="oDel">Ort löschen</button>
   </form>
@@ -873,7 +873,7 @@ async function shareTo(forWho) {
   if (navigator.share) { try { await navigator.share({ title: 'Zu zweit', text, url }); return; } catch (e) { if (e.name === 'AbortError') return; } }
   copy(url);
 }
-async function copy(s) { try { await navigator.clipboard.writeText(s); toast('Link kopiert'); } catch { prompt('Link kopieren:', s); } }
+async function copy(s) { try { await navigator.clipboard.writeText(s); toast('Kopiert'); } catch { prompt('Link kopieren:', s); } }
 $('#openSettings').addEventListener('click', () => {
   $('#sA').value = S.namen.a || ''; $('#sB').value = S.namen.b || '';
   $('#sMe').innerHTML = segHtml([['a', nameOf('a')], ['b', nameOf('b')]], me); $('#sMe').dataset.val = me;
@@ -892,7 +892,10 @@ $('#fSet').addEventListener('submit', (e) => {
 $('#sShare').addEventListener('click', () => shareTo(other()));
 $('#sCopy').addEventListener('click', () => copy(shareLink(other())));
 $('#sSync').addEventListener('click', () => sync());
-$('#sShortcut').addEventListener('click', () => copy(location.origin + location.pathname + '#k=' + code + '&ich=' + me + '&teilen='));
+document.querySelectorAll('[data-kb]').forEach((b) => b.addEventListener('click', () => {
+  const v = { url: CFG.supabaseUrl + '/rest/v1/rpc/zz_ort_aus_google', key: CFG.supabaseKey, text: 'k=' + code + '&ich=' + me + ' ' }[b.dataset.kb];
+  copy(v);
+}));
 $('#sLeave').addEventListener('click', () => {
   if (!confirm('Liste auf diesem iPhone entfernen? Auf dem Server und beim anderen iPhone bleibt sie erhalten. Mit dem Link kommst du jederzeit zurück.')) return;
   ['code', 'me', 'cache', 'out', 'seen', 'lastOk'].forEach(LS.del);
@@ -971,7 +974,10 @@ let map = null, markers = new Map(), temp = null, tempName = '', leafletLoading 
 const liveOrte = () => (S.orte || []).filter((o) => !o.geloescht);
 const ortById = (id) => (S.orte || []).find((o) => o.id === id);
 function isNewOrt(o) { return !!(o.von && o.von !== me && seenAt && !o.besucht_am && Date.parse(o.erstellt) > Date.parse(seenAt)); }
-const gmapsUrl = (o) => o.link || ('https://www.google.com/maps/search/?api=1&query=' + o.lat.toFixed(6) + '%2C' + o.lng.toFixed(6));
+// Öffnet direkt die Google-Maps-App (comgooglemaps…), nicht die Webseite
+const gmapsUrl = (o) => (o.link && /^https:\/\/(www\.google\.[a-z.]+\/maps|maps\.google\.[a-z.]+)\//i.test(o.link))
+  ? 'comgooglemapsurl://' + o.link.replace(/^https:\/\//i, '')
+  : 'comgooglemaps://?q=' + o.lat.toFixed(6) + ',' + o.lng.toFixed(6) + '&center=' + o.lat.toFixed(6) + ',' + o.lng.toFixed(6) + '&zoom=15';
 const mapsUrl = (o) => 'https://maps.apple.com/?ll=' + o.lat.toFixed(6) + ',' + o.lng.toFixed(6) + '&q=' + encodeURIComponent(o.name);
 const coord = (lat, lng) => Math.abs(lat).toFixed(4) + '° ' + (lat < 0 ? 'S' : 'N') + ', ' + Math.abs(lng).toFixed(4) + '° ' + (lng < 0 ? 'W' : 'O');
 function putOrt(o) {
@@ -1025,7 +1031,7 @@ function popupHtml(o) {
   const meta = [(o.von ? nameOf(o.von) : '') + ' · ' + fmtStamp(o.erstellt)];
   if (o.besucht_am) meta.push('dort gewesen ' + fmtStamp(o.besucht_am));
   return `<b>${esc(o.name)}</b>${o.notiz ? `<p>${esc(o.notiz)}</p>` : ''}<span class="pm">${esc(meta.join(' · '))}</span>
-    <div class="pb"><button type="button" data-ort-edit="${esc(o.id)}">Bearbeiten</button><a href="${esc(gmapsUrl(o))}" target="_blank" rel="noopener">Google Maps</a></div>`;
+    <div class="pb"><button type="button" data-ort-edit="${esc(o.id)}">Bearbeiten</button><a href="${esc(gmapsUrl(o))}">Google Maps</a></div>`;
 }
 function updateMarkers() {
   if (!map) return;
@@ -1120,12 +1126,14 @@ async function importShared(raw) {
   const url = um ? um[0] : null;
   const lines = text.replace(url || '', '').split(/\n/).map((x) => x.trim()).filter(Boolean);
   let name = lines[0] || '';
-  let info = {};
+  let info = {}; let linkFull = null;
   if (url) {
     toast('Lese Google-Maps-Link …');
     let full = url;
+    linkFull = url;
     if (/^https?:\/\/(maps\.app\.goo\.gl|goo\.gl\/maps|g\.co\/kgs)\//i.test(url)) {
       try { full = (await rpc('zz_link_aufloesen', { p_code: code, p_url: url })) || url; } catch {}
+      if (/^https:\/\/www\.google\.[a-z.]+\/maps\//i.test(full)) linkFull = full;
     }
     info = parseGoogle(full);
   }
@@ -1139,7 +1147,7 @@ async function importShared(raw) {
   if (lat == null) { $('#q').value = name || info.q || ''; toast('Ort nicht erkannt. Bitte suchen oder auf die Karte tippen.'); return; }
   if (!inNZ(lat, lng)) { toast('Dieser Ort liegt nicht in Neuseeland.'); return; }
   map.setView([lat, lng], 14); setTemp(lat, lng, name);
-  openOrt(null, { lat, lng, name, link: url });
+  openOrt(null, { lat, lng, name, link: linkFull || url });
 }
 
 /* Liste der Orte, von Nord nach Süd */
